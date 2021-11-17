@@ -22,32 +22,6 @@ import {
 } from 'react-native';
 import CheckBox from 'react-native-check-box';
 
-const Section = ({children, title}): Node => {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? 'white' : 'black',
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? 'white' : 'black',
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-};
-
 const Input = ({label, placeholder, isPassword}): Node => {
   const isDarkMode = useColorScheme() === 'dark';
   const style = isDarkMode ? styles.dark : styles.light;
@@ -97,22 +71,6 @@ const App: () => Node = () => {
 };
 
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
   dark: {
     content: {
       color: 'white',
