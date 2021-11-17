@@ -119,6 +119,7 @@ const App: () => Node = () => {
           <TouchableOpacity
             style={ready ? styles.all.buttonEnabled : styles.all.buttonDisabled}
             onPress={() => {setLoading(true);}}
+            disabled={!ready}
             >
             <Text>{loading ? 'Loading...' : 'Continue'}</Text>
           </TouchableOpacity>
