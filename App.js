@@ -22,9 +22,11 @@ import {
 } from 'react-native';
 import CheckBox from 'react-native-check-box';
 
-const Input = ({label, placeholder, isPassword}): Node => {
+const Input = ({label, placeholder, isPassword, validateCallback}): Node => {
   const isDarkMode = useColorScheme() === 'dark';
   const style = isDarkMode ? styles.dark : styles.light;
+  const [fieldState, setFieldState] = useState('hidden');
+
   return (
     <View style={styles.all.inputContainer}>
       <Text style={style.content}>{label}</Text>
@@ -34,8 +36,17 @@ const Input = ({label, placeholder, isPassword}): Node => {
           style={[style.content, styles.all.textInput]}
           placeholder={placeholder}
           placeholderTextColor={style.placeholderTextColor}
+          onChangeText={(text: string) => {
+            if (text === '')
+              setFieldState('hidden');
+            else
+              setFieldState(validateCallback(text));
+          }}
           />
-        <Image source={require('./signup_assets/field_invalid.png')}/>
+        <Image
+          style={fieldState === 'hidden' ? {opacity: 0} : {opacity: 1}}
+          source={require('./signup_assets/field_invalid.png')}
+          />
       </View>
     </View>
   );
