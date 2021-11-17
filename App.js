@@ -45,7 +45,11 @@ const Input = ({label, placeholder, isPassword, validateCallback}): Node => {
           />
         <Image
           style={fieldState === 'hidden' ? {opacity: 0} : {opacity: 1}}
-          source={require('./signup_assets/field_invalid.png')}
+          source={
+            fieldState === 'ok'
+              ? require('./signup_assets/field_valid.png')
+              : require('./signup_assets/field_invalid.png')
+          }
           />
       </View>
     </View>
