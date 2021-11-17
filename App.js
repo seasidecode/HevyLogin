@@ -15,7 +15,7 @@ import {
   StyleSheet,
   Text,
   TextInput,
-  Button,
+  TouchableOpacity,
   Image,
   useColorScheme,
   View,
@@ -65,6 +65,9 @@ const App: () => Node = () => {
   const [username, setUsername] = useState();
   const [termsAccepted, setTermsAccepted] = useState(false);
 
+  const ready = email && password && username && termsAccepted;
+  const [loading, setLoading] = useState(false);
+
   return (
     <SafeAreaView style={{flex: 1}}>
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
@@ -113,7 +116,12 @@ const App: () => Node = () => {
             checkedImage={<Image style={{tintColor: style.imageTintColor}} source={require('./signup_assets/checkbox_full.png')}/>}
             />
           <View style={{height: 20}} />
-          <Button disabled={!(email && password && username && termsAccepted)} title="Continue" />
+          <TouchableOpacity
+            style={ready ? styles.all.buttonEnabled : styles.all.buttonDisabled}
+            onPress={() => {setLoading(true);}}
+            >
+            <Text>{loading ? 'Loading...' : 'Continue'}</Text>
+          </TouchableOpacity>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -158,6 +166,16 @@ const styles = StyleSheet.create({
       flex: 1,
       paddingTop: 0,
       paddingBottom: 0,
+    },
+    buttonDisabled: {
+      padding: 10,
+      backgroundColor: 'darkgrey',
+      alignItems: 'center',
+    },
+    buttonEnabled: {
+      padding: 10,
+      backgroundColor: '#69f',
+      alignItems: 'center',
     },
   },
 });
