@@ -59,6 +59,10 @@ const Input = ({label, placeholder, isPassword, validateCallback}): Node => {
 const App: () => Node = () => {
   const isDarkMode = useColorScheme() === 'dark';
   const style = isDarkMode ? styles.dark : styles.light;
+
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+  const [username, setusername] = useState();
   const [termsAccepted, setTermsAccepted] = useState(false);
 
   return (
@@ -71,7 +75,9 @@ const App: () => Node = () => {
             label="Email"
             placeholder="example@gmail.com"
             validateCallback={(text: string) => {
-              return (/^[A-Za-z0-9]+@[A-Za-z0-9]+.[A-Za-z0-9][A-Za-z0-9]+/.test(text));
+              const valid = /^[A-Za-z0-9]+@[A-Za-z0-9]+.[A-Za-z0-9][A-Za-z0-9]+/.test(text);
+              setEmail(valid ? text : null);
+              return valid;
             }}
             />
           <Input
@@ -79,14 +85,18 @@ const App: () => Node = () => {
             label="Password"
             placeholder="minimum 6 characters"
             validateCallback={(text: string) => {
-              return (text.length >= 6);
+              const valid = (text.length >= 6);
+              setPassword(valid ? text : null);
+              return valid;
             }}
             />
           <Input
             label="Username"
             placeholder="username"
             validateCallback={(text: string) => {
-              return (text.length >= 3);
+              const valid = (text.length >= 3);
+              setUsername(valid ? text : null);
+              return valid;
             }}
             />
           <CheckBox
@@ -97,7 +107,7 @@ const App: () => Node = () => {
             unCheckedImage={<Image style={{tintColor: style.imageTintColor}} source={require('./signup_assets/checkbox_empty.png')}/>}
             checkedImage={<Image style={{tintColor: style.imageTintColor}} source={require('./signup_assets/checkbox_full.png')}/>}
             />
-          <Button title="Continue" />
+          <Button disabled={!(email && password && username && termsAccepted)} title="Continue" />
         </View>
       </ScrollView>
     </SafeAreaView>
