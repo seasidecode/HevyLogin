@@ -52,9 +52,9 @@ const Input = ({label, placeholder, isPassword}): Node => {
   const isDarkMode = useColorScheme() === 'dark';
   const style = isDarkMode ? styles.dark : styles.light;
   return (
-    <View style={{marginBottom: 10}}>
+    <View style={styles.all.inputContainer}>
       <Text style={style.content}>{label}</Text>
-      <View style={[style.content, styles.all.inputFlex]}>
+      <View style={styles.all.inputFlex}>
         <TextInput secureTextEntry={isPassword} style={[style.content, styles.all.textInput]} placeholder={placeholder} placeholderTextColor={style.placeholderTextColor} />
         <Image source={require('./signup_assets/field_invalid.png')}/>
       </View>
@@ -125,6 +125,9 @@ const styles = StyleSheet.create({
     imageTintColor: null,
   },
   all: {
+    inputContainer: {
+      marginBottom: 10,
+    },
     inputFlex: {
       flexDirection: 'row',
       alignItems: 'center',
