@@ -40,7 +40,7 @@ const Input = ({label, placeholder, isPassword, validateCallback}): Node => {
             if (text === '')
               setFieldState('hidden');
             else
-              setFieldState(validateCallback(text));
+              setFieldState(validateCallback(text) ? 'ok' : 'error');
           }}
           />
         <Image
@@ -71,7 +71,7 @@ const App: () => Node = () => {
             label="Email"
             placeholder="example@gmail.com"
             validateCallback={(text: string) => {
-              return (/^[A-Za-z0-9]+@[A-Za-z0-9]+.[A-Za-z0-9][A-Za-z0-9]+/.test(text)) ? 'ok' : 'error';
+              return (/^[A-Za-z0-9]+@[A-Za-z0-9]+.[A-Za-z0-9][A-Za-z0-9]+/.test(text));
             }}
             />
           <Input
@@ -79,14 +79,14 @@ const App: () => Node = () => {
             label="Password"
             placeholder="minimum 6 characters"
             validateCallback={(text: string) => {
-              return (text.length >= 6) ? 'ok' : 'error';
+              return (text.length >= 6);
             }}
             />
           <Input
             label="Username"
             placeholder="username"
             validateCallback={(text: string) => {
-              return (text.length >= 3) ? 'ok' : 'error';
+              return (text.length >= 3);
             }}
             />
           <CheckBox
