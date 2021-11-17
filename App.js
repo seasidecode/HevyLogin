@@ -54,42 +54,33 @@ const getStyle = (): object => {
   return style;
 };
 
-const Label = ({children}): Node => {
+const Input = ({label, placeholder, isPassword}): Node => {
+  const style = getStyle();
   return (
-    <Text style={getStyle().content}>{children}</Text>
+    <View style={{marginBottom: 10}}>
+      <Text style={getStyle().content}>{label}</Text>
+      <View style={[style.content, styles.all.inputFlex]}>
+        <TextInput secureTextEntry={isPassword} style={[style.content, styles.all.textInput]} placeholder={placeholder} placeholderTextColor={style.placeholderTextColor} />
+        <Image source={require('./signup_assets/field_invalid.png')}/>
+      </View>
+    </View>
   );
 };
 
-const Input = ({placeholder}): Node => {
-  const style = getStyle();
-  return (
-    <TextInput style={style.content} placeholder={placeholder} placeholderTextColor={style.placeholderTextColor} />
-  );
-};
-
-const PasswordInput = ({placeholder}): Node => {
-  const style = getStyle();
-  return (
-    <TextInput secureTextEntry style={style.content} placeholder={placeholder} placeholderTextColor={style.placeholderTextColor} />
-  );
-};
 const App: () => Node = () => {
   const isDarkMode = useColorScheme() === 'dark';
   const style = isDarkMode ? styles.dark : styles.light;
   const [termsAccepted, setTermsAccepted] = useState(false);
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{flex: 1}}>
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
       <ScrollView
         contentInsetAdjustmentBehavior="automatic">
         <View style={style.content}>
-          <Label>Email</Label>
-          <Input placeholder="example@gmail.com" />
-          <Label>Password</Label>
-          <PasswordInput placeholder="minimum 6 characters" />
-          <Label>Username</Label>
-          <Input placeholder="username" />
+          <Input label="Email" placeholder="example@gmail.com" />
+          <Input isPassword={true} label="Password" placeholder="minimum 6 characters" />
+          <Input label="Username" placeholder="username" />
           <CheckBox
             rightText="I accept the terms & conditions and the privacy policy"
             rightTextStyle={style.content}
@@ -137,6 +128,17 @@ const styles = StyleSheet.create({
     },
     placeholderTextColor: 'grey',
     imageTintColor: null,
+  },
+  all: {
+    inputFlex: {
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    textInput: {
+      flex: 1,
+      paddingTop: 0,
+      paddingBottom: 0,
+    },
   },
 });
 
