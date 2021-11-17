@@ -16,6 +16,7 @@ import {
   Text,
   TextInput,
   Button,
+  Image,
   useColorScheme,
   View,
 } from 'react-native';
@@ -70,6 +71,8 @@ const App: () => Node = () => {
             rightText="I accept the terms & conditions and the privacy policy"
             isChecked={termsAccepted}
             onClick={() => {setTermsAccepted(!termsAccepted)}}
+            unCheckedImage={<Image source={require('./signup_assets/checkbox_empty.png')}/>}
+            checkedImage={<Image source={require('./signup_assets/checkbox_full.png')}/>}
             />
           <Button title="Continue" />
         </View>
