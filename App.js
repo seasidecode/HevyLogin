@@ -67,9 +67,28 @@ const App: () => Node = () => {
       <ScrollView
         contentInsetAdjustmentBehavior="automatic">
         <View style={style.content}>
-          <Input label="Email" placeholder="example@gmail.com" />
-          <Input isPassword={true} label="Password" placeholder="minimum 6 characters" />
-          <Input label="Username" placeholder="username" />
+          <Input
+            label="Email"
+            placeholder="example@gmail.com"
+            validateCallback={(text: string) => {
+              return (/^[A-Za-z0-9]+@[A-Za-z0-9]+.[A-Za-z0-9][A-Za-z0-9]+/.test(text)) ? 'ok' : 'error';
+            }}
+            />
+          <Input
+            isPassword={true}
+            label="Password"
+            placeholder="minimum 6 characters"
+            validateCallback={(text: string) => {
+              return (text.length >= 6) ? 'ok' : 'error';
+            }}
+            />
+          <Input
+            label="Username"
+            placeholder="username"
+            validateCallback={(text: string) => {
+              return (text.length >= 3) ? 'ok' : 'error';
+            }}
+            />
           <CheckBox
             rightText="I accept the terms & conditions and the privacy policy"
             rightTextStyle={style.content}
