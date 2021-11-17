@@ -55,7 +55,12 @@ const Input = ({label, placeholder, isPassword}): Node => {
     <View style={styles.all.inputContainer}>
       <Text style={style.content}>{label}</Text>
       <View style={styles.all.inputFlex}>
-        <TextInput secureTextEntry={isPassword} style={[style.content, styles.all.textInput]} placeholder={placeholder} placeholderTextColor={style.placeholderTextColor} />
+        <TextInput
+          secureTextEntry={isPassword}
+          style={[style.content, styles.all.textInput]}
+          placeholder={placeholder}
+          placeholderTextColor={style.placeholderTextColor}
+          />
         <Image source={require('./signup_assets/field_invalid.png')}/>
       </View>
     </View>
