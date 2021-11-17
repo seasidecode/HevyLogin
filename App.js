@@ -62,7 +62,7 @@ const App: () => Node = () => {
 
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
-  const [username, setusername] = useState();
+  const [username, setUsername] = useState();
   const [termsAccepted, setTermsAccepted] = useState(false);
 
   return (
