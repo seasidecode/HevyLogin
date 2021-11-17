@@ -48,8 +48,34 @@ const Section = ({children, title}): Node => {
   );
 };
 
+const getStyle = (): object => {
+  const isDarkMode = useColorScheme() === 'dark';
+  const style = isDarkMode ? styles.dark : styles.light;
+  return style;
+};
+
+const Label = ({children}): Node => {
+  return (
+    <Text style={getStyle().content}>{children}</Text>
+  );
+};
+
+const Input = ({placeholder}): Node => {
+  const style = getStyle();
+  return (
+    <TextInput style={style.content} placeholder={placeholder} placeholderTextColor={style.placeholderTextColor} />
+  );
+};
+
+const PasswordInput = ({placeholder}): Node => {
+  const style = getStyle();
+  return (
+    <TextInput secureTextEntry style={style.content} placeholder={placeholder} placeholderTextColor={style.placeholderTextColor} />
+  );
+};
 const App: () => Node = () => {
   const isDarkMode = useColorScheme() === 'dark';
+  const style = isDarkMode ? styles.dark : styles.light;
   const [termsAccepted, setTermsAccepted] = useState(false);
 
   return (
@@ -57,22 +83,20 @@ const App: () => Node = () => {
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
       <ScrollView
         contentInsetAdjustmentBehavior="automatic">
-        <View
-          style={{
-            backgroundColor: isDarkMode ? 'black' : 'white',
-          }}>
-          <Text>Email</Text>
-          <TextInput placeholder="example@gmail.com" />
-          <Text>Password</Text>
-          <TextInput secureTextEntry placeholder="minimum 6 characters" />
-          <Text>Username</Text>
-          <TextInput placeholder="username" />
+        <View style={style.content}>
+          <Label>Email</Label>
+          <Input placeholder="example@gmail.com" />
+          <Label>Password</Label>
+          <PasswordInput placeholder="minimum 6 characters" />
+          <Label>Username</Label>
+          <Input placeholder="username" />
           <CheckBox
             rightText="I accept the terms & conditions and the privacy policy"
+            rightTextStyle={style.content}
             isChecked={termsAccepted}
             onClick={() => {setTermsAccepted(!termsAccepted)}}
-            unCheckedImage={<Image source={require('./signup_assets/checkbox_empty.png')}/>}
-            checkedImage={<Image source={require('./signup_assets/checkbox_full.png')}/>}
+            unCheckedImage={<Image style={{tintColor: style.imageTintColor}} source={require('./signup_assets/checkbox_empty.png')}/>}
+            checkedImage={<Image style={{tintColor: style.imageTintColor}} source={require('./signup_assets/checkbox_full.png')}/>}
             />
           <Button title="Continue" />
         </View>
@@ -97,6 +121,22 @@ const styles = StyleSheet.create({
   },
   highlight: {
     fontWeight: '700',
+  },
+  dark: {
+    content: {
+      color: 'white',
+      backgroundColor: 'black',
+    },
+    placeholderTextColor: 'grey',
+    imageTintColor: 'grey',
+  },
+  light: {
+    content: {
+      color: 'black',
+      backgroundColor: 'white',
+    },
+    placeholderTextColor: 'grey',
+    imageTintColor: null,
   },
 });
 
