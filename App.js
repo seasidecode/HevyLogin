@@ -70,7 +70,12 @@ const App: () => Node = () => {
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
       <ScrollView
         contentInsetAdjustmentBehavior="automatic">
+        <View style={[style.header, {alignItems: 'center', justifyContent: 'center', height: 40}]}>
+          {/*<Image style={{position: 'absolute', left: 0}} source={{backArrow}} />*/}
+          <Text style={[style.header, {textAlign: 'center'}]}>Sign up</Text>
+        </View>
         <View style={style.content}>
+          <View style={{height: 20}} />
           <Input
             label="Email"
             placeholder="example@gmail.com"
@@ -107,6 +112,7 @@ const App: () => Node = () => {
             unCheckedImage={<Image style={{tintColor: style.imageTintColor}} source={require('./signup_assets/checkbox_empty.png')}/>}
             checkedImage={<Image style={{tintColor: style.imageTintColor}} source={require('./signup_assets/checkbox_full.png')}/>}
             />
+          <View style={{height: 20}} />
           <Button disabled={!(email && password && username && termsAccepted)} title="Continue" />
         </View>
       </ScrollView>
@@ -116,6 +122,10 @@ const App: () => Node = () => {
 
 const styles = StyleSheet.create({
   dark: {
+    header: {
+      color: 'white',
+      backgroundColor: '#333',
+    },
     content: {
       color: 'white',
       backgroundColor: 'black',
@@ -124,6 +134,10 @@ const styles = StyleSheet.create({
     imageTintColor: 'grey',
   },
   light: {
+    header: {
+      color: 'black',
+      backgroundColor: 'white',
+    },
     content: {
       color: 'black',
       backgroundColor: 'white',
@@ -138,6 +152,7 @@ const styles = StyleSheet.create({
     inputFlex: {
       flexDirection: 'row',
       alignItems: 'center',
+      justifyContent: 'center',
     },
     textInput: {
       flex: 1,
