@@ -6,7 +6,7 @@
  * @flow strict-local
  */
 
-import React from 'react';
+import React, {useState} from 'react';
 import type {Node} from 'react';
 import {
   SafeAreaView,
@@ -19,6 +19,7 @@ import {
   useColorScheme,
   View,
 } from 'react-native';
+import CheckBox from 'react-native-check-box';
 
 const Section = ({children, title}): Node => {
   const isDarkMode = useColorScheme() === 'dark';
@@ -48,6 +49,7 @@ const Section = ({children, title}): Node => {
 
 const App: () => Node = () => {
   const isDarkMode = useColorScheme() === 'dark';
+  const [termsAccepted, setTermsAccepted] = useState(false);
 
   return (
     <SafeAreaView>
@@ -64,6 +66,11 @@ const App: () => Node = () => {
           <TextInput secureTextEntry placeholder="minimum 6 characters" />
           <Text>Username</Text>
           <TextInput placeholder="username" />
+          <CheckBox
+            rightText="I accept the terms & conditions and the privacy policy"
+            isChecked={termsAccepted}
+            onClick={() => {setTermsAccepted(!termsAccepted)}}
+            />
           <Button title="Continue" />
         </View>
       </ScrollView>
