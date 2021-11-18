@@ -119,7 +119,7 @@ const App = () => {
           <View style={{height: 20}} />
           <TouchableOpacity
             style={[styles.all.button, ready ? styles.all.buttonEnabled : styles.all.buttonDisabled]}
-            onPress={() => {setLoading(true);}}
+            onPress={() => setLoading(true)}
             disabled={!ready}
             >
             {loading ? <ActivityIndicator /> : <Text>Continue</Text>}
