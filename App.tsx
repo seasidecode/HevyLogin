@@ -69,7 +69,7 @@ const App = () => {
   const [username, setUsername] = useState('');
   const [termsAccepted, setTermsAccepted] = useState(false);
 
-  const emailValid = /^[A-Za-z0-9]+@[A-Za-z0-9]+.[A-Za-z0-9][A-Za-z0-9]+/.test(email);
+  const emailValid = /^[A-Za-z0-9]+@[A-Za-z0-9]+\.[A-Za-z0-9][A-Za-z0-9]+/.test(email);
   const passwordValid = (password.length >= 6);
   const usernameValid = (username.length >= 3);
   const ready = emailValid && passwordValid && usernameValid && termsAccepted;
