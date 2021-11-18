@@ -19,6 +19,7 @@ import {
   Image,
   useColorScheme,
   View,
+  ActivityIndicator,
 } from 'react-native';
 import CheckBox from 'react-native-check-box';
 
@@ -117,11 +118,11 @@ const App: () => Node = () => {
             />
           <View style={{height: 20}} />
           <TouchableOpacity
-            style={ready ? styles.all.buttonEnabled : styles.all.buttonDisabled}
+            style={[styles.all.button, ready ? styles.all.buttonEnabled : styles.all.buttonDisabled]}
             onPress={() => {setLoading(true);}}
             disabled={!ready}
             >
-            <Text>{loading ? 'Loading...' : 'Continue'}</Text>
+            {loading ? <ActivityIndicator /> : <Text>Continue</Text>}
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -167,6 +168,9 @@ const styles = StyleSheet.create({
       flex: 1,
       paddingTop: 0,
       paddingBottom: 0,
+    },
+    button: {
+      height: 40,
     },
     buttonDisabled: {
       padding: 10,
