@@ -25,35 +25,32 @@ import {
 import CheckBox from 'react-native-check-box';
 
 const Input: React.FC<{
+  value: string;
   label: string;
   placeholder: string;
   isPassword: boolean;
-  validateCallback: object;
-}> = ({label, placeholder, isPassword, validateCallback}) => {
+  isValid: boolean;
+  onChangeText: object;
+}> = ({value, label, placeholder, isPassword, isValid, onChangeText}) => {
   const isDarkMode = useColorScheme() === 'dark';
   const style = isDarkMode ? styles.dark : styles.light;
-  const [fieldState, setFieldState] = useState('hidden');
 
   return (
     <View style={styles.all.inputContainer}>
       <Text style={style.content}>{label}</Text>
       <View style={styles.all.inputFlex}>
         <TextInput
+          value={value}
           secureTextEntry={isPassword}
           style={[style.content, styles.all.textInput]}
           placeholder={placeholder}
           placeholderTextColor={style.placeholderTextColor}
-          onChangeText={(text: string) => {
-            if (text === '')
-              setFieldState('hidden');
-            else
-              setFieldState(validateCallback(text) ? 'ok' : 'error');
-          }}
+          onChangeText={(text) => onChangeText(text)}
           />
         <Image
-          style={fieldState === 'hidden' ? {opacity: 0} : {opacity: 1}}
+          style={value === '' ? {opacity: 0} : {opacity: 1}}
           source={
-            fieldState === 'ok'
+            isValid
               ? require('./signup_assets/field_valid.png')
               : require('./signup_assets/field_invalid.png')
           }
@@ -67,12 +64,15 @@ const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
   const style = isDarkMode ? styles.dark : styles.light;
 
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
-  const [username, setUsername] = useState();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState('');
   const [termsAccepted, setTermsAccepted] = useState(false);
 
-  const ready = email && password && username && termsAccepted;
+  const emailValid = /^[A-Za-z0-9]+@[A-Za-z0-9]+.[A-Za-z0-9][A-Za-z0-9]+/.test(email);
+  const passwordValid = (password.length >= 6);
+  const usernameValid = (username.length >= 3);
+  const ready = emailValid && passwordValid && usernameValid && termsAccepted;
   const [loading, setLoading] = useState(false);
 
   return (
@@ -87,32 +87,26 @@ const App = () => {
         <View style={style.content}>
           <View style={{height: 20}} />
           <Input
+            value={email}
             label="Email"
             placeholder="example@gmail.com"
-            validateCallback={(text: string) => {
-              const valid = /^[A-Za-z0-9]+@[A-Za-z0-9]+.[A-Za-z0-9][A-Za-z0-9]+/.test(text);
-              setEmail(valid ? text : null);
-              return valid;
-            }}
+            isValid={emailValid}
+            onChangeText={(text: string) => setEmail(text)}
             />
           <Input
+            value={password}
             isPassword={true}
             label="Password"
             placeholder="minimum 6 characters"
-            validateCallback={(text: string) => {
-              const valid = (text.length >= 6);
-              setPassword(valid ? text : null);
-              return valid;
-            }}
+            isValid={passwordValid}
+            onChangeText={(text: string) => setPassword(text)}
             />
           <Input
+            value={username}
             label="Username"
             placeholder="username"
-            validateCallback={(text: string) => {
-              const valid = (text.length >= 3);
-              setUsername(valid ? text : null);
-              return valid;
-            }}
+            isValid={usernameValid}
+            onChangeText={(text: string) => setUsername(text)}
             />
           <CheckBox
             rightText="I accept the terms & conditions and the privacy policy"
