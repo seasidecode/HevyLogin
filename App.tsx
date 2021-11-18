@@ -2,12 +2,13 @@
  * Sample React Native App
  * https://github.com/facebook/react-native
  *
+ * Generated with the TypeScript template
+ * https://github.com/react-native-community/react-native-template-typescript
+ *
  * @format
- * @flow strict-local
  */
 
 import React, {useState} from 'react';
-import type {Node} from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -23,7 +24,12 @@ import {
 } from 'react-native';
 import CheckBox from 'react-native-check-box';
 
-const Input = ({label, placeholder, isPassword, validateCallback}): Node => {
+const Input: React.FC<{
+  label: string;
+  placeholder: string;
+  isPassword: boolean;
+  validateCallback: object;
+}> = ({label, placeholder, isPassword, validateCallback}) => {
   const isDarkMode = useColorScheme() === 'dark';
   const style = isDarkMode ? styles.dark : styles.light;
   const [fieldState, setFieldState] = useState('hidden');
@@ -57,7 +63,7 @@ const Input = ({label, placeholder, isPassword, validateCallback}): Node => {
   );
 };
 
-const App: () => Node = () => {
+const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
   const style = isDarkMode ? styles.dark : styles.light;
 
