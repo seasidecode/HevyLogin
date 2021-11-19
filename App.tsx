@@ -83,7 +83,7 @@ const App = () => {
 
   return (
     <SafeAreaView style={[style.content, styles.all.topLevel]}>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
+      <StatusBar barStyle="light-content" backgroundColor="#757575" />
       <ScrollView
         contentInsetAdjustmentBehavior="automatic">
         <View style={[style.header, {alignItems: 'center', justifyContent: 'center', height: 56}]}>
