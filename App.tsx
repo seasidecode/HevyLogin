@@ -42,7 +42,7 @@ const Input: React.FC<{
         <TextInput
           value={value}
           secureTextEntry={isPassword}
-          style={styles.all.textInput}
+          style={[style.content, styles.all.textInput]}
           placeholder={placeholder}
           placeholderTextColor={style.placeholderTextColor}
           onChangeText={(text) => onChangeText(text)}
@@ -117,7 +117,7 @@ const App = () => {
           <View style={{height: 12}} />
           <CheckBox
             rightText="I accept the terms & conditions and the privacy policy"
-            rightTextStyle={[styles.all.content, styles.all.buttonFont, {paddingLeft: 8}]}
+            rightTextStyle={[styles.all.buttonFont, style.content, {paddingLeft: 8}]}
             isChecked={termsAccepted}
             onClick={() => {setTermsAccepted(!termsAccepted)}}
             unCheckedImage={<Image style={{tintColor: style.imageTintColor}} source={require('./signup_assets/checkbox_empty.png')}/>}
