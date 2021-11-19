@@ -114,15 +114,16 @@ const App = () => {
             isValid={usernameValid}
             onChangeText={(text: string) => setUsername(text)}
             />
-          <View style={{marginTop: 11, marginBottom: 15}}>
+          <View style={styles.all.checkboxFlex}>
             <CheckBox
-              rightText="I accept the terms & conditions and the privacy policy"
-              rightTextStyle={[styles.all.buttonFont, style.content, {paddingLeft: 8}]}
               isChecked={termsAccepted}
               onClick={() => {setTermsAccepted(!termsAccepted)}}
               unCheckedImage={<Image style={{tintColor: style.imageTintColor}} source={require('./signup_assets/checkbox_empty.png')}/>}
               checkedImage={<Image style={{tintColor: style.imageTintColor}} source={require('./signup_assets/checkbox_full.png')}/>}
               />
+              <View style={styles.all.checkboxTextContainer}>
+                <Text style={[styles.all.buttonFont, style.content]}>I accept the terms &amp; conditions and the privacy policy</Text>
+              </View>
           </View>
           <TouchableOpacity
             style={[styles.all.button, ready ? styles.all.buttonEnabled : styles.all.buttonDisabled]}
@@ -184,6 +185,18 @@ const styles = StyleSheet.create({
       borderBottomColor: '#c6c6c6',
       borderBottomWidth: StyleSheet.hairlineWidth,
       fontSize: 16,
+    },
+    checkboxFlex: {
+      marginTop: 16,
+      marginBottom: 22,
+      marginRight: 30,
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    checkboxTextContainer: {
+      marginTop: -30,
+      marginBottom: -30,
+      marginLeft: 16,
     },
     button: {
       height: 50,
