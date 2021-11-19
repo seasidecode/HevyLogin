@@ -37,18 +37,24 @@ const Input: React.FC<{
 
   return (
     <View style={styles.all.inputContainer}>
-      <Text style={style.content}>{label}</Text>
+      <Text style={[style.content, styles.all.font]}>{label}</Text>
       <View style={styles.all.inputFlex}>
         <TextInput
           value={value}
           secureTextEntry={isPassword}
-          style={[style.content, styles.all.textInput]}
+          style={styles.all.textInput}
           placeholder={placeholder}
           placeholderTextColor={style.placeholderTextColor}
           onChangeText={(text) => onChangeText(text)}
           />
         <Image
-          style={value === '' ? {opacity: 0} : {opacity: 1}}
+          style={[
+            {
+              position: 'absolute',
+              right: 0,
+            },
+            value === '' ? {opacity: 0} : {opacity: 1}
+          ]}
           source={
             isValid
               ? require('./signup_assets/field_valid.png')
@@ -76,15 +82,15 @@ const App = () => {
   const [loading, setLoading] = useState(false);
 
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView style={[style.content, styles.all.topLevel]}>
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
       <ScrollView
         contentInsetAdjustmentBehavior="automatic">
-        <View style={[style.header, {alignItems: 'center', justifyContent: 'center', height: 40}]}>
+        <View style={[style.header, {alignItems: 'center', justifyContent: 'center', height: 56}]}>
           {/*<Image style={{position: 'absolute', left: 0}} source={{backArrow}} />*/}
-          <Text style={[style.header, {textAlign: 'center'}]}>Sign up</Text>
+          <Text style={[style.header, styles.all.font, {textAlign: 'center'}]}>Sign up</Text>
         </View>
-        <View style={style.content}>
+        <View style={style.content, styles.all.innerContent}>
           <View style={{height: 20}} />
           <Input
             value={email}
@@ -108,21 +114,22 @@ const App = () => {
             isValid={usernameValid}
             onChangeText={(text: string) => setUsername(text)}
             />
+          <View style={{height: 12}} />
           <CheckBox
             rightText="I accept the terms & conditions and the privacy policy"
-            rightTextStyle={style.content}
+            rightTextStyle={[styles.all.content, styles.all.buttonFont, {paddingLeft: 8}]}
             isChecked={termsAccepted}
             onClick={() => {setTermsAccepted(!termsAccepted)}}
             unCheckedImage={<Image style={{tintColor: style.imageTintColor}} source={require('./signup_assets/checkbox_empty.png')}/>}
             checkedImage={<Image style={{tintColor: style.imageTintColor}} source={require('./signup_assets/checkbox_full.png')}/>}
             />
-          <View style={{height: 20}} />
+          <View style={{height: 14}} />
           <TouchableOpacity
             style={[styles.all.button, ready ? styles.all.buttonEnabled : styles.all.buttonDisabled]}
             onPress={() => setLoading(true)}
             disabled={!ready}
             >
-            {loading ? <ActivityIndicator /> : <Text>Continue</Text>}
+            {loading ? <ActivityIndicator /> : <Text style={styles.all.buttonFont}>Continue</Text>}
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -134,13 +141,13 @@ const styles = StyleSheet.create({
   dark: {
     header: {
       color: 'white',
-      backgroundColor: '#333',
+      backgroundColor: '#1c1c1e',
     },
     content: {
       color: 'white',
       backgroundColor: 'black',
     },
-    placeholderTextColor: 'grey',
+    placeholderTextColor: '#9b9b9b',
     imageTintColor: 'grey',
   },
   light: {
@@ -156,31 +163,52 @@ const styles = StyleSheet.create({
     imageTintColor: null,
   },
   all: {
+    topLevel: {
+      flex: 1,
+    },
+    innerContent: {
+      paddingLeft: 16,
+      paddingRight: 16,
+    },
     inputContainer: {
-      marginBottom: 10,
+      marginTop: 4,
+      marginBottom: 12,
     },
     inputFlex: {
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'center',
+      height: 34,
     },
     textInput: {
       flex: 1,
-      paddingTop: 0,
-      paddingBottom: 0,
+      padding: 0,
+      marginTop: 4,
+      borderBottomColor: '#c6c6c6',
+      borderBottomWidth: StyleSheet.hairlineWidth,
+      fontSize: 16,
     },
     button: {
-      height: 40,
+      height: 50,
+      alignItems: 'center',
+      justifyContent: 'center',
+      borderRadius: 5,
     },
     buttonDisabled: {
-      padding: 10,
-      backgroundColor: 'darkgrey',
+      backgroundColor: '#9b9b9b',
       alignItems: 'center',
     },
     buttonEnabled: {
-      padding: 10,
-      backgroundColor: '#69f',
+      backgroundColor: '#1d83ea',
       alignItems: 'center',
+    },
+    font: {
+      fontSize: 16,
+      letterSpacing: -0.25,
+    },
+    buttonFont: {
+      fontSize: 16,
+      color: 'white',
     },
   },
 });
