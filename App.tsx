@@ -116,7 +116,12 @@ const SignUpScreen = ({navigation}) => {
           checkedImage={<Image style={{tintColor: style.imageTintColor}} source={require('./signup_assets/checkbox_full.png')}/>}
           />
           <View style={styles.all.checkboxTextContainer}>
-            <Text style={[styles.all.buttonFont, style.content]}>I accept the terms &amp; conditions and the privacy policy</Text>
+            <Text style={[styles.all.buttonFont, style.content]}>
+              I accept the
+              <Text onPress={() => {navigation.navigate('TermsConditions')}}> terms &amp;</Text>
+              <Text onPress={() => {navigation.navigate('TermsConditions')}}> conditions </Text>
+              and the <Text onPress={() => {navigation.navigate('PrivacyPolicy')}}>privacy policy</Text>
+            </Text>
           </View>
       </View>
       <TouchableOpacity
@@ -126,6 +131,30 @@ const SignUpScreen = ({navigation}) => {
         >
         {loading ? <ActivityIndicator /> : <Text style={styles.all.buttonFont}>Continue</Text>}
       </TouchableOpacity>
+    </ScrollView>
+  );
+};
+
+const TermsConditionsScreen = ({navigation}) => {
+  const isDarkMode = useColorScheme() === 'dark';
+  const style = isDarkMode ? styles.dark : styles.light;
+
+  return (
+    <ScrollView
+      contentInsetAdjustmentBehavior="automatic">
+      <Text>Terms and conditions...</Text>
+    </ScrollView>
+  );
+};
+
+const PrivacyPolicyScreen = ({navigation}) => {
+  const isDarkMode = useColorScheme() === 'dark';
+  const style = isDarkMode ? styles.dark : styles.light;
+
+  return (
+    <ScrollView
+      contentInsetAdjustmentBehavior="automatic">
+      <Text>Privacy policy...</Text>
     </ScrollView>
   );
 };
@@ -151,6 +180,14 @@ const App = () => {
             name="SignUp"
             component={SignUpScreen}
             options={{title: 'Sign up'}} />
+          <Stack.Screen
+            name="TermsConditions"
+            component={TermsConditionsScreen}
+            options={{title: 'Terms & Conditions'}} />
+          <Stack.Screen
+            name="PrivacyPolicy"
+            component={PrivacyPolicyScreen}
+            options={{title: 'Privacy Policy'}} />
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaView>
