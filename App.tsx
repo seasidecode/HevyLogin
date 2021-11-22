@@ -23,6 +23,8 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import CheckBox from 'react-native-check-box';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 const Input: React.FC<{
   value: string;
@@ -66,7 +68,7 @@ const Input: React.FC<{
   );
 };
 
-const App = () => {
+const SignUpScreen = ({navigation}) => {
   const isDarkMode = useColorScheme() === 'dark';
   const style = isDarkMode ? styles.dark : styles.light;
 
@@ -82,58 +84,75 @@ const App = () => {
   const [loading, setLoading] = useState(false);
 
   return (
+    <ScrollView
+      contentInsetAdjustmentBehavior="automatic">
+      <Input
+        value={email}
+        label="Email"
+        placeholder="example@gmail.com"
+        isValid={emailValid}
+        onChangeText={(text: string) => setEmail(text)}
+        />
+      <Input
+        value={password}
+        isPassword={true}
+        label="Password"
+        placeholder="minimum 6 characters"
+        isValid={passwordValid}
+        onChangeText={(text: string) => setPassword(text)}
+        />
+      <Input
+        value={username}
+        label="Username"
+        placeholder="username"
+        isValid={usernameValid}
+        onChangeText={(text: string) => setUsername(text)}
+        />
+      <View style={styles.all.checkboxFlex}>
+        <CheckBox
+          isChecked={termsAccepted}
+          onClick={() => {setTermsAccepted(!termsAccepted)}}
+          unCheckedImage={<Image style={{tintColor: style.imageTintColor}} source={require('./signup_assets/checkbox_empty.png')}/>}
+          checkedImage={<Image style={{tintColor: style.imageTintColor}} source={require('./signup_assets/checkbox_full.png')}/>}
+          />
+          <View style={styles.all.checkboxTextContainer}>
+            <Text style={[styles.all.buttonFont, style.content]}>I accept the terms &amp; conditions and the privacy policy</Text>
+          </View>
+      </View>
+      <TouchableOpacity
+        style={[styles.all.button, ready ? styles.all.buttonEnabled : styles.all.buttonDisabled]}
+        onPress={() => setLoading(true)}
+        disabled={!ready}
+        >
+        {loading ? <ActivityIndicator /> : <Text style={styles.all.buttonFont}>Continue</Text>}
+      </TouchableOpacity>
+    </ScrollView>
+  );
+};
+
+const App = () => {
+  const isDarkMode = useColorScheme() === 'dark';
+  const style = isDarkMode ? styles.dark : styles.light;
+
+  const Stack = createNativeStackNavigator();
+
+  return (
     <SafeAreaView style={[style.content, styles.all.topLevel]}>
       <StatusBar barStyle="light-content" backgroundColor="#757575" />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic">
-        <View style={[style.header, {alignItems: 'center', justifyContent: 'center', height: 56}]}>
-          {/*<Image style={{position: 'absolute', left: 0}} source={{backArrow}} />*/}
-          <Text style={[style.header, styles.all.font, {textAlign: 'center'}]}>Sign up</Text>
-        </View>
-        <View style={style.content, styles.all.innerContent}>
-          <View style={{height: 20}} />
-          <Input
-            value={email}
-            label="Email"
-            placeholder="example@gmail.com"
-            isValid={emailValid}
-            onChangeText={(text: string) => setEmail(text)}
-            />
-          <Input
-            value={password}
-            isPassword={true}
-            label="Password"
-            placeholder="minimum 6 characters"
-            isValid={passwordValid}
-            onChangeText={(text: string) => setPassword(text)}
-            />
-          <Input
-            value={username}
-            label="Username"
-            placeholder="username"
-            isValid={usernameValid}
-            onChangeText={(text: string) => setUsername(text)}
-            />
-          <View style={styles.all.checkboxFlex}>
-            <CheckBox
-              isChecked={termsAccepted}
-              onClick={() => {setTermsAccepted(!termsAccepted)}}
-              unCheckedImage={<Image style={{tintColor: style.imageTintColor}} source={require('./signup_assets/checkbox_empty.png')}/>}
-              checkedImage={<Image style={{tintColor: style.imageTintColor}} source={require('./signup_assets/checkbox_full.png')}/>}
-              />
-              <View style={styles.all.checkboxTextContainer}>
-                <Text style={[styles.all.buttonFont, style.content]}>I accept the terms &amp; conditions and the privacy policy</Text>
-              </View>
-          </View>
-          <TouchableOpacity
-            style={[styles.all.button, ready ? styles.all.buttonEnabled : styles.all.buttonDisabled]}
-            onPress={() => setLoading(true)}
-            disabled={!ready}
-            >
-            {loading ? <ActivityIndicator /> : <Text style={styles.all.buttonFont}>Continue</Text>}
-          </TouchableOpacity>
-        </View>
-      </ScrollView>
+      <NavigationContainer>
+        <Stack.Navigator
+          screenOptions={{
+            headerStyle: style.header,
+            headerTitleStyle: [style.header, styles.all.font],
+            headerTitleAlign: 'center',
+            contentStyle: [style.content, styles.all.innerContent],
+          }}>
+          <Stack.Screen
+            name="SignUp"
+            component={SignUpScreen}
+            options={{title: 'Sign up'}} />
+        </Stack.Navigator>
+      </NavigationContainer>
     </SafeAreaView>
   );
 };
@@ -170,6 +189,7 @@ const styles = StyleSheet.create({
     innerContent: {
       paddingLeft: 16,
       paddingRight: 16,
+      paddingTop: 20,
     },
     inputContainer: {
       marginTop: 4,
