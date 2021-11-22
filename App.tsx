@@ -242,6 +242,7 @@ const styles = StyleSheet.create({
       marginTop: 4,
       borderBottomColor: '#c6c6c6',
       borderBottomWidth: StyleSheet.hairlineWidth,
+      fontFamily: 'AvenirNext-Regular',
       fontSize: 16,
     },
     checkboxFlex: {
@@ -271,10 +272,12 @@ const styles = StyleSheet.create({
       alignItems: 'center',
     },
     font: {
+      fontFamily: 'AvenirNext-Medium',
       fontSize: 16,
       letterSpacing: -0.25,
     },
     buttonFont: {
+      fontFamily: 'AvenirNext-Medium',
       fontSize: 16,
       color: 'white',
     },
