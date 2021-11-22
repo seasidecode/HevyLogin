@@ -174,6 +174,7 @@ const App = () => {
             headerStyle: style.header,
             headerTitleStyle: [style.header, styles.all.font],
             headerTitleAlign: 'center',
+            headerTintColor: '#1d83ea',
             contentStyle: [style.content, styles.all.innerContent],
           }}>
           <Stack.Screen
